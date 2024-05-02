@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Restoring photos in Prokudin-Gorskii Collection">
+  <meta name="keywords" content="Prokudin-Gorskii, Old-photo">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Restoration of Images Degraded by Adverse Weather Conditions</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/katex/katex.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/script.js"></script>
+  <script src="./static/katex/katex.js"></script>
+  <script src="./static/katex/contrib/auto-render.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        // customised options
+        // • auto-render specific keys, e.g.:
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false },
+          { left: '\\[', right: '\\]', display: true }
+        ],
+        // • rendering keys, e.g.:
+        throwOnError: false
+      });
+    });
+  </script>
+  <link rel="stylesheet" href="./static/highlight/styles/default.min.css">
+  <script src="./static/highlight/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <style>
+    .footnote {
+      margin-top: 20px;
+      font-size: smaller;
+    }
+
+    .footnote-link {
+      text-decoration: none;
+      superscript-size: 0.8em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  </nav>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Restoration of Images Degraded by Adverse Weather Conditions</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <span class="author-block">
+                  Lan Yan, Chiyuan Fu, Peipei Zhong
+            </div>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <!-- <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2011.12948" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span> -->
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/jeya-maria-jose/TransWeather"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Baseline</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/lzdnsb/Restoration-of-Images-Degraded-by-Adverse-Weather-Conditions"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- Dataset Link. -->
+                <span class="link-block">
+                  <a href="https://drive.google.com/file/d/1tfeBnjZX1wIhIFPl6HOzzOKOyo0GdGHl/view"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-images"></i>
+                    </span>
+                    <span>Data</span>
+                  </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Adverse weather conditions, like rain, fog, and snow, drastically reduce visibility and degrade image
+            quality, posing a significant challenge for computer vision algorithms in autonomous navigation and
+            surveillance systems.
+            In our project, we explored the integration of Spatial Information Fusion using Depth Maps within the
+            state-of-the-art de-weathering model Transweather for image restoration tasks. We also investigated the how
+            de-weathering can improve the performance of object detection tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+
+      <!----------------------------------------------------------------------------->
+      <!-- Part -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <!-- title -->
+          <h2 class="title is-3">Baseline</h2>
+
+          <!-- Content -->
+          <div class="content has-text-justified">
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-8 has-text-centered interpolation-image">
+                <img src="./static/images/baseline.png" class="interpolation-image" />
+                <p>Figure in Original Paper</p>
+              </div>
+            </div>
+            <p>
+              Removing adverse weather conditions from images is crucial for various applications, and
+              traditionally,
+              methods have targeted only one type of weather condition. All-in-One was developed to tackle multiple
+              conditions simultaneously but it uses multiple encoders and is bulky. TransWeather is a recently model
+              which only requires a single encoder and decoder and achieved SOTA performance. Therefore we chose
+              transweather as our baseline.
+            </p>
+
+            <p>
+              For baseline implementation, we use the code from the original transweather repo. We made the
+              following
+              changes to the code:
+            </p>
+            <ol>
+              <li>We added a utils.py that was missing from the original repo. </li>
+              <li>The dataset has to be downloaded from the link above. The dataset contains a total of 17069 input
+                gt
+                picture pairs. The dataset has to manually be split to training and validation set, formulated into
+                a
+                structure of data/train/input, data/train/gt, data/test/input, data/test/gt, and put a txt file
+                containing the file path of all pictures contained in the directory for train and test folder
+                respectively. We used 9:1 for training:validation split, which is 16263 input-gt picture pairs for
+                training, and 1806 input-gt picture pairs for validation.</li>
+              <li>The command to run is python train.py -train_batch_size 32 -exp_name try1. On V100 machine on AWS,
+                the
+                time and cost for training 200 epoch on the full dataset is 26 hours and roughly $80.</li>
+            </ol>
+
+            <!-- Content ends -->
+          </div>
+
+          <!--section ends  -->
+        </div>
+      </div>
+
+
+      <!----------------------------------------------------------------------------->
+      <!-- Part -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <!-- title -->
+          <h2 class="title is-3">Spatial Information Fusion using Depth Map</h2>
+
+          <!-- Content -->
+          <div class="content has-text-justified">
+
+            <!-- title -->
+            <h3 class="title is-4">Intuition</h3>
+            <p>
+              Different weather conditions like rain, haze, and snow affect how we see things because of particles in
+              the air: water drops for rain, aerosols for haze, and snowflakes for snow. These particles scatter light
+              in different ways, which can distort images captured by cameras.
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-8 has-text-centered interpolation-image">
+                <img src="./static/images/weather model.png" class="interpolation-image" />
+              </div>
+            </div>
+
+            <p>
+              The atmosphere scattering model explains this by showing how light reaches the camera: some light travels
+              directly, while other light is scattered by particles in the air. And its worth noting that this decay is
+              exponential to the depth of an object in scene. Therefore, we think using depth information can improve
+              the model's performance on the de-weathering task.
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-8 has-text-centered interpolation-image">
+                <img src="./static/images/Intuition.png" class="interpolation-image" />
+              </div>
+            </div>
+
+            <!-- title -->
+            <h3 class="title is-4">Implicit Depth Experiment</h3>
+
+            <p>
+              For our initial experiment, we augmented the input image with depth information by incorporating it as a
+              fourth channel. This depth information was sourced from a depth estimation model called <a
+                href="https://github.com/prs-eth/Marigold">Marigold</a>. We executed the Marigold model on all training
+              images—16263 in total. As a diffusion-based model, Marigold operates slowly, requiring approximately 18
+              hours to process these images on a V100 AWS machine.
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-8 has-text-centered interpolation-image">
+                <img src="./static/images/marigold example.png" class="interpolation-image" />
+              </div>
+            </div>
+
+            <p>
+              As we can see from the above image, the depth map generated by Marigold is mainly accurate. It even erased
+              some artifacts caused by the rain. Therefore, we hope that by adding this depth information to the input
+              image, the model can better understand the scene and improve the de-weathering performance.
+            </p>
+
+            <p>
+              As a second step, we preprocessed the input images by integrating the depth data into the fourth channel
+              during data loading. The architecture of our model was adapted to accommodate four channels instead of the
+              standard three. We trained this modified model using the same hyperparameters as those used in our
+              baseline study.
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-12 has-text-centered interpolation-image">
+                <img src="./static/images/4channel.png" class="interpolation-image" />
+              </div>
+            </div>
+
+            <p>
+              However, the results of this experiment did not meet our expectations. Both training and validation
+              performances deteriorated, with significant overfitting observed. It appears that the model might perceive
+              the implicitly added fourth channel—intended to enhance learning—as noise, which does not contribute to
+              improving performance.
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-12 has-text-centered interpolation-image">
+                <img src="./static/images/implicit 300.jpg" class="interpolation-image" />
+              </div>
+            </div>
+            <p>
+              We also tried finetuning the model for longer epochs, but the results only improved slightly. All these
+              showed that the implicit depth information does not help the model to improve its performance.
+            </p>
+
+
+            <!-- title -->
+            <h3 class="title is-4">Explicit Depth Experiment</h3>
+
+            <p>
+              For the second experiment, we incorporated depth information into the input images explicitly by adding a
+              depth loss that specifically guides the model to consider this information. The primary concept involves
+              performing a depth estimation on both the predicted image and the corresponding ground truth image during
+              each iteration where backpropagation occurs. We then calculate the depth loss and add it to the overall
+              loss.
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-6 has-text-centered interpolation-image">
+                <img src="./static/images/loss.png" class="interpolation-image" />
+              </div>
+            </div>
+
+            <p>
+              In our second experiment, we encountered significant engineering challenges, primarily due to
+              compatibility issues between the models and environments. Initially, we utilized the Marigold model for
+              depth estimation(which require different setup with experimetn 1). However, this model operates on Python
+              3.10 and Torch 2.0.1, incompatible with
+              TransWeather's Python 3.6 and Torch 1.7.1 setup. Additionally, ensuring support for the required CUDA
+              version further complicated the setup.
+            </p>
+
+            <p>
+              After unsuccessful attempts to create a compatible environment for both models, we explored setting up
+              Marigold as an API endpoint. However, the inherent latency of Marigold as a diffusion model, combined with
+              the communication delay from API calls, rendered the 200 epochs training impractical in terms of time.
+            </p>
+
+            <p>
+              We then tested MiDas, a CNN-based depth estimation model faster than Marigold but still incompatible with
+              the TransWeather environment. Our final attempt involved ADDS-DepthNet, a model compatible with our
+              existing setup and recommended for implementing depth loss. Successfully integrating ADDS-DepthNet, we
+              modified the TransWeather codebase to include the model loading, inference logic, and implementation of
+              ADDS-DepthNet.
+            </p>
+
+            <p>
+              This integration allowed us to add a depth loss to the training process, albeit with modifications to the
+              batch size and loss parameters due to GPU limitations. The batch size was reduced to 16, and the depth
+              loss factor was set at 0.01, in contrast to the perceptual loss factor of 0.04. The revised setup extended
+              the training duration for 200 epochs to approximately 150 hours on a T4 AWS machine.
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-ful has-text-centered interpolation-image">
+                <img src="./static/images/explicit result.jpg" class="interpolation-image" />
+              </div>
+            </div>
+
+            <p>
+              The results of this new method is much better than our first experiment. However, its still did not
+              surpass the original baseline. The training curve is almost identical, but the validation curve is
+              slightly lower (~0.01). Combined with our ablation study, we believe this is due to the model already
+              capturing the depth information implicitly by learning the de-weathering task itself (especially the
+              de-fog task). Therefore, the explicit depth information does not provide much additional information to
+              the model. This can also be seen from the qualitative results below.
+            </p>
+
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-12 has-text-centered interpolation-image">
+                <img src="./static/images/bdd100.png" class="interpolation-image" />
+              </div>
+            </div>
+
+            <!-- title -->
+            <h3 class="title is-4">Ablations for Explicit Depth Experiment</h3>
+
+            <p>
+              Potential ablation studies for our experiments include varying the depth loss factor, assessing the impact
+              of depth information across different dataset scales, and altering training parameters such as learning
+              rate, batch size, and number of epochs. However, given the constraints of time and budget, we selected the
+              following ablations for execution:
+            </p>
+
+            <p>
+              We tested how the depth loss factor affects the model's performance by varying the factor. The results
+              can be seen in the image below. Unfortunately, we found that depth loss have little effect on the model's
+              performance. The training curve is similar to the baseline, with minimal fluctuations in the validations.
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-ful has-text-centered interpolation-image">
+                <img src="./static/images/ablation depthloss.jpg" class="interpolation-image" />
+              </div>
+            </div>
+
+            <!-- text -->
+            <p>
+
+            </p>
+
+            <!-- Content ends -->
+          </div>
+
+          <!--section ends  -->
+        </div>
+      </div>
+
+      <!----------------------------------------------------------------------------->
+      <!-- Part -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <!-- title -->
+          <h2 class="title is-3">Downtream task: Detection</h2>
+
+          <!-- Content -->
+          <div class="content has-text-justified">
+
+            <p>
+              The deweathering process not only aligns real-world images more closely with training data but also
+              reduces false positives and negatives caused by weather distortions.
+              Therefore, we want to investigate how deweathering improves the performance object detection task.
+            </p>
+
+            <!-- title -->
+            <h3 class="title is-4">Training</h3>
+            <p>
+              Following our previous pipeline, we verified and analyzed Transweather's performance on both “All-Weather”
+              dataset (dataset used in the paper, with many weather types) and BDD100k dataset(A Diverse Driving
+              Dataset, with detection ground truth).
+            </p>
+            <p>
+              For detection task, we used the “All-weather” dataset to train the model, the quantitative results are
+              compared in the last section.
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-12 has-text-centered interpolation-image">
+                <img src="./static/images/allweather.png" class="interpolation-image" />
+              </div>
+            </div>
+
+
+            <p>
+              We also use images from the BDD100k dataset to train the model, and the performance is also pretty good.
+              Train_PSNR: 31.88, Val_PSNR: 29.34, Val_SSIM: 0.9424
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-12 has-text-centered interpolation-image">
+                <img src="./static/images/bdd100.png" class="interpolation-image" />
+              </div>
+            </div>
+
+            <!-- title -->
+            <h4 class="title is-5">Brief Introduction of BDD100k dataset<sup><a href="#footnote1"
+                  class="footnote-link">1</a></sup></h4>
+
+            <p>
+              BDD100K is a large driving video dataset with 100K videos and 10 tasks to evaluate the exciting
+              progress
+              of image recognition algorithms on autonomous driving. For object detection, BDD100k contains
+              70,000/10,000/20,000 images for train/val/test, 1.8M objects.
+            </p>
+
+            <!-- title -->
+            <h4 class="title is-5">Data preprocessing</h4>
+
+            <p>
+              We first used the “depth anything” method <sup><a href="#footnote2" class="footnote-link">2</a></sup>
+              to
+              generate depth map for the 70,000
+              training data, and then generate their corresponding foggy images using physics based vision method:
+              the
+              intensity E of a scene point in bad weather, as recorded by a monochrome camera :
+
+              $$E=R e^{-\beta d}+E_{\infty}\left(1-e^{-\beta d}\right)$$
+
+              $E_{\infty}$ is the sky brightness, $R$ is radiance of the scene point on a clear day, $\beta$ is the
+              scattering coefficient of the atmosphere and $d$ is the depth of the scene point.
+            </p>
+
+            <p>
+              Then we use these paired ground truth and foggy images to train the Transweather model.
+            </p>
+
+            <!-- title -->
+            <h3 class="title is-4">Detection</h3>
+            <p>
+              Then we implement object detection on it. We use the Faster R-CNN detector<sup><a href="#footnote3"
+                  class="footnote-link">3</a></sup>, which is pretrained on the COCO dataset to do the detection.
+            </p>
+
+            <p>
+              For the “All-weather” dataset, before deweather, it either makes false detections or misses some
+              objects.
+              But after deweather, we can detect more accurately and detect more objects.
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-12 has-text-centered interpolation-image">
+                <img src="./static/images/detection alleather.png" class="interpolation-image" />
+              </div>
+            </div>
+
+            <p>
+              Then comes to the BDD100k dataset, we chose 1345 images from the val dataset, and used the above
+              method to
+              generate foggy images. We used these foggy images for deweather inference and then applied our
+              detector on
+              them. We can see that our detector can detect more objects. Here are some quantitative results. mAP
+              increases after deweather, and since BDD100k is a driving dataset, we also record the average
+              precision
+              for the car category, and it also increases.
+            </p>
+
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-12 has-text-centered interpolation-image">
+                <img src="./static/images/detection bdd.png" class="interpolation-image" />
+              </div>
+            </div>
+
+            <!-- title -->
+            <h4 class="title is-5">mAP(mean Average Precision)</h4>
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-full-width has-text-centered interpolation-image">
+                <img src="./static/images/table1.png" class="interpolation-image" />
+              </div>
+            </div>
+
+            <!-- title -->
+            <h4 class="title is-5">AP for 'car' category</h4>
+            <!-- Image -->
+            <div class="columns is-centered interpolation-panel">
+              <div class="column is-full-width has-text-centered interpolation-image">
+                <img src="./static/images/table2.png" class="interpolation-image" />
+              </div>
+            </div>
+
+            <!-- text -->
+            <p>
+
+            </p>
+
+            <!-- Content ends -->
+          </div>
+
+          <!--section ends  -->
+        </div>
+      </div>
+
+      <!----------------------------------------------------------------------------->
+      <!-- Part -->
+      <!-- <div class="columns is-centered"> -->
+      <!-- <div class="column is-full-width"> -->
+      <!-- title -->
+      <!-- <h2 class="title is-3">Template</h2> -->
+
+      <!-- Content -->
+      <!-- <div class="content has-text-justified"> -->
+
+      <!-- Image -->
+      <!-- <div class="columns is-centered interpolation-panel">
+              <div class="column is-1 has-text-centered interpolation-image">
+                <img src="./static/images/0_data.png" class="interpolation-image" />
+              </div>
+            </div> -->
+
+      <!-- text -->
+      <!-- <p>
+
+            </p> -->
+
+      <!-- Content ends -->
+      <!-- </div> -->
+
+      <!-- Footnotes Section -->
+      <div class="footnote">
+        <sup id="footnote1">1</sup> Yu, Fisher, et al. "Bdd100k: A diverse driving dataset for heterogeneous
+        multitask
+        learning." Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. 2020
+      </div>
+      <div class="footnote">
+        <sup id="footnote2">2</sup> Yang, Lihe, et al. "Depth anything: Unleashing the power of large-scale
+        unlabeled
+        data." arXiv preprint arXiv:2401.10891 (2024).
+      </div>
+      <div class="footnote">
+        <sup id="footnote3">3</sup> Ren, Shaoqing, et al. "Faster r-cnn: Towards real-time object detection with
+        region proposal networks." Advances in neural information processing systems 28 (2015).
+      </div>
+      <!-- <div class="footnote">
+        <sup id="footnote4">4</sup> This is the content of the footnote explaining the details.
+      </div> -->
+      <!--section ends  -->
+    </div>
+    </div>
+
+
+
+    <script>
+      new BeforeAfter({
+        id: '#example1'
+      }); 
+    </script>
+    </div>
+
+  </section>
+
+
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              Thanks to the authors of authors of Nerfies for sharing the <a
+                href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website.
+            </p>
+            <p>
+              This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+            <p>
+              Images on this site were collected from Google Image Search and are used solely for research purposes. If
+              you are the copyright owner of any image and wish for it to be removed, please contact me for immediate
+              removal.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
