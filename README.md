@@ -1,5 +1,5 @@
 # Restoration-of-Images-Degraded-by-Adverse-Weather-Conditions
-CMU-24Spring-16726-Learning_based_image_synthesis-Final_project
+CMU-24Spring-16726-Learning_based_image_synthesis-Final_project (http://www.andrew.cmu.edu/course/16-726-sp24/projects/lany2/project/)
 
 Adverse weather conditions, like rain, fog, and snow, drastically reduce visibility and degrade image quality, posing a significant challenge for computer vision algorithms in autonomous navigation and surveillance systems. In our project, we explored the integration of Spatial Information Fusion using Depth Maps within the state-of-the-art de-weathering model Transweather for image restoration tasks. We also investigated the how de-weathering can improve the performance of object detection tasks.
 
